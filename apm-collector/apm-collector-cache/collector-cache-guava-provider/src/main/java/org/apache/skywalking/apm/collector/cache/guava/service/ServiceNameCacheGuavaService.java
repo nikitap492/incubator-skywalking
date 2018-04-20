@@ -23,10 +23,12 @@ import com.google.common.cache.CacheBuilder;
 import org.apache.skywalking.apm.collector.cache.guava.CacheUtils;
 import org.apache.skywalking.apm.collector.cache.service.ServiceNameCacheService;
 import org.apache.skywalking.apm.collector.core.module.ModuleManager;
-import org.apache.skywalking.apm.collector.core.util.ObjectUtils;
 import org.apache.skywalking.apm.collector.storage.StorageModule;
 import org.apache.skywalking.apm.collector.storage.dao.cache.IServiceNameCacheDAO;
 import org.apache.skywalking.apm.collector.storage.table.register.ServiceName;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 /**
  * @author peng-yongsheng
@@ -43,7 +45,7 @@ public class ServiceNameCacheGuavaService implements ServiceNameCacheService {
     }
 
     private IServiceNameCacheDAO getServiceNameCacheDAO() {
-        if (ObjectUtils.isEmpty(serviceNameCacheDAO)) {
+        if (isNull(serviceNameCacheDAO)) {
             this.serviceNameCacheDAO = moduleManager.find(StorageModule.NAME).getService(IServiceNameCacheDAO.class);
         }
         return this.serviceNameCacheDAO;

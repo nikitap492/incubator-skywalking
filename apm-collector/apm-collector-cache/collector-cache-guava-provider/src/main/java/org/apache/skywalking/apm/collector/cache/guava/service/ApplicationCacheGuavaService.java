@@ -23,10 +23,12 @@ import com.google.common.cache.CacheBuilder;
 import org.apache.skywalking.apm.collector.cache.guava.CacheUtils;
 import org.apache.skywalking.apm.collector.cache.service.ApplicationCacheService;
 import org.apache.skywalking.apm.collector.core.module.ModuleManager;
-import org.apache.skywalking.apm.collector.core.util.ObjectUtils;
 import org.apache.skywalking.apm.collector.storage.StorageModule;
 import org.apache.skywalking.apm.collector.storage.dao.cache.IApplicationCacheDAO;
 import org.apache.skywalking.apm.collector.storage.table.register.Application;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 /**
  * @author peng-yongsheng
@@ -45,7 +47,7 @@ public class ApplicationCacheGuavaService implements ApplicationCacheService {
     }
 
     private IApplicationCacheDAO getApplicationCacheDAO() {
-        if (ObjectUtils.isEmpty(applicationCacheDAO)) {
+        if (isNull(applicationCacheDAO)) {
             this.applicationCacheDAO = moduleManager.find(StorageModule.NAME).getService(IApplicationCacheDAO.class);
         }
         return this.applicationCacheDAO;

@@ -23,10 +23,12 @@ import com.google.common.cache.CacheBuilder;
 import org.apache.skywalking.apm.collector.cache.guava.CacheUtils;
 import org.apache.skywalking.apm.collector.cache.service.NetworkAddressCacheService;
 import org.apache.skywalking.apm.collector.core.module.ModuleManager;
-import org.apache.skywalking.apm.collector.core.util.ObjectUtils;
+import org.apache.skywalking.apm.collector.core.util.StringUtils;
 import org.apache.skywalking.apm.collector.storage.StorageModule;
 import org.apache.skywalking.apm.collector.storage.dao.cache.INetworkAddressCacheDAO;
 import org.apache.skywalking.apm.collector.storage.table.register.NetworkAddress;
+
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -44,7 +46,7 @@ public class NetworkAddressCacheGuavaService implements NetworkAddressCacheServi
     }
 
     private INetworkAddressCacheDAO getNetworkAddressCacheDAO() {
-        if (ObjectUtils.isEmpty(networkAddressCacheDAO)) {
+        if (isNull(networkAddressCacheDAO)) {
             this.networkAddressCacheDAO = moduleManager.find(StorageModule.NAME).getService(INetworkAddressCacheDAO.class);
         }
         return this.networkAddressCacheDAO;

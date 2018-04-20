@@ -24,9 +24,10 @@ import org.apache.skywalking.apm.collector.cache.guava.CacheUtils;
 import org.apache.skywalking.apm.collector.cache.service.InstanceCacheService;
 import org.apache.skywalking.apm.collector.core.module.ModuleManager;
 import org.apache.skywalking.apm.collector.core.util.Const;
-import org.apache.skywalking.apm.collector.core.util.ObjectUtils;
 import org.apache.skywalking.apm.collector.storage.StorageModule;
 import org.apache.skywalking.apm.collector.storage.dao.cache.IInstanceCacheDAO;
+
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -47,7 +48,7 @@ public class InstanceCacheGuavaService implements InstanceCacheService {
     }
 
     private IInstanceCacheDAO getInstanceCacheDAO() {
-        if (ObjectUtils.isEmpty(instanceCacheDAO)) {
+        if (isNull(instanceCacheDAO)) {
             this.instanceCacheDAO = moduleManager.find(StorageModule.NAME).getService(IInstanceCacheDAO.class);
         }
         return this.instanceCacheDAO;
