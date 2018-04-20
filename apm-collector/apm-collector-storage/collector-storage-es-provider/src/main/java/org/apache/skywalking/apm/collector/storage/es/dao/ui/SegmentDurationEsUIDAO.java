@@ -18,7 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.es.dao.ui;
 
-import java.util.List;
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.core.util.BooleanUtils;
 import org.apache.skywalking.apm.collector.core.util.CollectionUtils;
@@ -36,6 +35,8 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
+
+import java.util.List;
 
 /**
  * @author peng-yongsheng

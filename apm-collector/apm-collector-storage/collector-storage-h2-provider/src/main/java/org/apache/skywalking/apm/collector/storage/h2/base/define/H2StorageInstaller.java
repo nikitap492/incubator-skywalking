@@ -18,9 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.h2.base.define;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 import org.apache.skywalking.apm.collector.client.Client;
 import org.apache.skywalking.apm.collector.client.h2.H2Client;
 import org.apache.skywalking.apm.collector.client.h2.H2ClientException;
@@ -30,6 +27,10 @@ import org.apache.skywalking.apm.collector.storage.StorageInstallException;
 import org.apache.skywalking.apm.collector.storage.StorageInstaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author peng-yongsheng

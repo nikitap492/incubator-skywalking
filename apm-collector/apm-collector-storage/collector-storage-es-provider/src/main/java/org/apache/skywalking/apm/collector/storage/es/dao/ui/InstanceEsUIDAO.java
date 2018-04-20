@@ -18,8 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.es.dao.ui;
 
-import java.util.LinkedList;
-import java.util.List;
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.core.util.BooleanUtils;
 import org.apache.skywalking.apm.collector.core.util.StringUtils;
@@ -47,6 +45,9 @@ import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author peng-yongsheng

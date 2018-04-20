@@ -18,8 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.es.base.define;
 
-import java.io.IOException;
-import java.util.List;
 import org.apache.skywalking.apm.collector.client.Client;
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.core.data.ColumnDefine;
@@ -31,6 +29,9 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.IndexNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author peng-yongsheng

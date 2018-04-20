@@ -20,12 +20,7 @@ package org.apache.skywalking.apm.collector.boot;
 
 import org.apache.skywalking.apm.collector.boot.config.ApplicationConfigLoader;
 import org.apache.skywalking.apm.collector.boot.config.ConfigFileNotFoundException;
-import org.apache.skywalking.apm.collector.core.module.ApplicationConfiguration;
-import org.apache.skywalking.apm.collector.core.module.ModuleConfigException;
-import org.apache.skywalking.apm.collector.core.module.ModuleManager;
-import org.apache.skywalking.apm.collector.core.module.ModuleNotFoundException;
-import org.apache.skywalking.apm.collector.core.module.ProviderNotFoundException;
-import org.apache.skywalking.apm.collector.core.module.ServiceNotProvidedException;
+import org.apache.skywalking.apm.collector.core.module.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

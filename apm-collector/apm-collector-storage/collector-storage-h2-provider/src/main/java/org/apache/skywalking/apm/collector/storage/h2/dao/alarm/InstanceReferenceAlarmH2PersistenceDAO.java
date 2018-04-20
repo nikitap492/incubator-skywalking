@@ -18,10 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.h2.dao.alarm;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.skywalking.apm.collector.client.h2.H2Client;
 import org.apache.skywalking.apm.collector.storage.dao.alarm.IInstanceReferenceAlarmPersistenceDAO;
 import org.apache.skywalking.apm.collector.storage.h2.base.dao.AbstractPersistenceH2DAO;
@@ -29,6 +25,11 @@ import org.apache.skywalking.apm.collector.storage.h2.base.define.H2SqlEntity;
 import org.apache.skywalking.apm.collector.storage.table.alarm.InstanceReferenceAlarm;
 import org.apache.skywalking.apm.collector.storage.table.alarm.InstanceReferenceAlarmTable;
 import org.apache.skywalking.apm.collector.storage.table.alarm.ServiceReferenceAlarmTable;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author peng-yongsheng

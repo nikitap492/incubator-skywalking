@@ -18,15 +18,7 @@
 
 package org.apache.skywalking.apm.collector.configuration;
 
-import org.apache.skywalking.apm.collector.configuration.service.IApdexThresholdService;
-import org.apache.skywalking.apm.collector.configuration.service.IApplicationAlarmRuleConfig;
-import org.apache.skywalking.apm.collector.configuration.service.IApplicationReferenceAlarmRuleConfig;
-import org.apache.skywalking.apm.collector.configuration.service.ICollectorConfig;
-import org.apache.skywalking.apm.collector.configuration.service.IComponentLibraryCatalogService;
-import org.apache.skywalking.apm.collector.configuration.service.IInstanceAlarmRuleConfig;
-import org.apache.skywalking.apm.collector.configuration.service.IInstanceReferenceAlarmRuleConfig;
-import org.apache.skywalking.apm.collector.configuration.service.IServiceAlarmRuleConfig;
-import org.apache.skywalking.apm.collector.configuration.service.IServiceReferenceAlarmRuleConfig;
+import org.apache.skywalking.apm.collector.configuration.service.*;
 import org.apache.skywalking.apm.collector.core.module.Module;
 
 /**

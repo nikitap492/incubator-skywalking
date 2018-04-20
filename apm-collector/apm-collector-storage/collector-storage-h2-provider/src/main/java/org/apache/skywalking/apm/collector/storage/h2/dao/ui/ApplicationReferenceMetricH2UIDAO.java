@@ -18,12 +18,13 @@
 
 package org.apache.skywalking.apm.collector.storage.h2.dao.ui;
 
-import java.util.List;
 import org.apache.skywalking.apm.collector.client.h2.H2Client;
 import org.apache.skywalking.apm.collector.storage.dao.ui.IApplicationReferenceMetricUIDAO;
 import org.apache.skywalking.apm.collector.storage.h2.base.dao.H2DAO;
 import org.apache.skywalking.apm.collector.storage.table.MetricSource;
 import org.apache.skywalking.apm.collector.storage.ui.common.Step;
+
+import java.util.List;
 
 /**
  * @author peng-yongsheng, clevertension

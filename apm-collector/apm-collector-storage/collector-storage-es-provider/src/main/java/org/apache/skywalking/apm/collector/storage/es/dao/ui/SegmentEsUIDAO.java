@@ -19,8 +19,6 @@
 package org.apache.skywalking.apm.collector.storage.es.dao.ui;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import java.util.Base64;
-import java.util.Map;
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.core.util.StringUtils;
 import org.apache.skywalking.apm.collector.storage.dao.ui.ISegmentUIDAO;
@@ -30,6 +28,9 @@ import org.apache.skywalking.apm.network.proto.TraceSegmentObject;
 import org.elasticsearch.action.get.GetResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Base64;
+import java.util.Map;
 
 /**
  * @author peng-yongsheng

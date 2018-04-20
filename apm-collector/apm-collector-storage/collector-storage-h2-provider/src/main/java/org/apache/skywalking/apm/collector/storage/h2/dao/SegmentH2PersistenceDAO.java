@@ -18,8 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.h2.dao;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.skywalking.apm.collector.client.h2.H2Client;
 import org.apache.skywalking.apm.collector.storage.base.sql.SqlBuilder;
 import org.apache.skywalking.apm.collector.storage.dao.ISegmentPersistenceDAO;
@@ -29,6 +27,9 @@ import org.apache.skywalking.apm.collector.storage.table.segment.Segment;
 import org.apache.skywalking.apm.collector.storage.table.segment.SegmentTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author peng-yongsheng, clevertension

@@ -18,8 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.es.dao.ui;
 
-import java.util.LinkedList;
-import java.util.List;
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.storage.dao.ui.IApplicationMappingUIDAO;
 import org.apache.skywalking.apm.collector.storage.es.base.dao.EsDAO;
@@ -34,6 +32,9 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author peng-yongsheng

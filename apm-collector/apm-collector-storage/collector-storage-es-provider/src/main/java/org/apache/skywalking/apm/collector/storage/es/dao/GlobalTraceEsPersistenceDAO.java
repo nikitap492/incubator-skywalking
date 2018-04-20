@@ -18,9 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.es.dao;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.core.UnexpectedException;
 import org.apache.skywalking.apm.collector.core.util.TimeBucketUtils;
@@ -34,6 +31,9 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author peng-yongsheng

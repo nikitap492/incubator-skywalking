@@ -18,8 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.es.dao.alarm;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.core.annotations.trace.GraphComputingMetric;
 import org.apache.skywalking.apm.collector.storage.dao.alarm.IApplicationReferenceAlarmListPersistenceDAO;
@@ -28,6 +26,9 @@ import org.apache.skywalking.apm.collector.storage.table.alarm.ApplicationRefere
 import org.apache.skywalking.apm.collector.storage.table.alarm.ApplicationReferenceAlarmListTable;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author peng-yongsheng

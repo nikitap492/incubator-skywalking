@@ -35,12 +35,7 @@ import org.apache.skywalking.apm.collector.core.module.ModuleProvider;
 import org.apache.skywalking.apm.collector.remote.RemoteModule;
 import org.apache.skywalking.apm.collector.remote.service.RemoteDataRegisterService;
 import org.apache.skywalking.apm.collector.storage.StorageModule;
-import org.apache.skywalking.apm.collector.storage.table.alarm.ApplicationAlarm;
-import org.apache.skywalking.apm.collector.storage.table.alarm.ApplicationAlarmList;
-import org.apache.skywalking.apm.collector.storage.table.alarm.InstanceAlarm;
-import org.apache.skywalking.apm.collector.storage.table.alarm.InstanceAlarmList;
-import org.apache.skywalking.apm.collector.storage.table.alarm.ServiceAlarm;
-import org.apache.skywalking.apm.collector.storage.table.alarm.ServiceAlarmList;
+import org.apache.skywalking.apm.collector.storage.table.alarm.*;
 
 /**
  * @author peng-yongsheng

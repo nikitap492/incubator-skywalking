@@ -18,14 +18,15 @@
 
 package org.apache.skywalking.apm.collector.storage.h2.dao.gcmp;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.skywalking.apm.collector.client.h2.H2Client;
 import org.apache.skywalking.apm.collector.storage.h2.base.dao.AbstractPersistenceH2DAO;
 import org.apache.skywalking.apm.collector.storage.table.jvm.GCMetric;
 import org.apache.skywalking.apm.collector.storage.table.jvm.GCMetricTable;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author peng-yongsheng

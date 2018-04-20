@@ -18,10 +18,6 @@
 
 package org.apache.skywalking.apm.collector.remote.grpc.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import org.apache.skywalking.apm.collector.cluster.ClusterModuleListener;
 import org.apache.skywalking.apm.collector.core.UnexpectedException;
 import org.apache.skywalking.apm.collector.core.data.RemoteData;
@@ -34,6 +30,11 @@ import org.apache.skywalking.apm.collector.remote.service.RemoteClient;
 import org.apache.skywalking.apm.collector.remote.service.RemoteDataIDGetter;
 import org.apache.skywalking.apm.collector.remote.service.RemoteSenderService;
 import org.apache.skywalking.apm.collector.remote.service.Selector;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author peng-yongsheng

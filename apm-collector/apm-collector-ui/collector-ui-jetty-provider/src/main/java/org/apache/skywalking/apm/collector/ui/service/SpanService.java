@@ -20,7 +20,6 @@ package org.apache.skywalking.apm.collector.ui.service;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.List;
 import org.apache.skywalking.apm.collector.cache.CacheModule;
 import org.apache.skywalking.apm.collector.cache.service.ApplicationCacheService;
 import org.apache.skywalking.apm.collector.cache.service.ServiceNameCacheService;
@@ -35,6 +34,8 @@ import org.apache.skywalking.apm.network.proto.KeyWithStringValue;
 import org.apache.skywalking.apm.network.proto.LogMessage;
 import org.apache.skywalking.apm.network.proto.SpanObject;
 import org.apache.skywalking.apm.network.proto.TraceSegmentObject;
+
+import java.util.List;
 
 /**
  * @author peng-yongsheng

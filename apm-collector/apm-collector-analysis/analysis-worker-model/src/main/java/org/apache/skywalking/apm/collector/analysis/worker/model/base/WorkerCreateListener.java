@@ -18,9 +18,10 @@
 
 package org.apache.skywalking.apm.collector.analysis.worker.model.base;
 
+import org.apache.skywalking.apm.collector.analysis.worker.model.impl.PersistenceWorker;
+
 import java.util.LinkedList;
 import java.util.List;
-import org.apache.skywalking.apm.collector.analysis.worker.model.impl.PersistenceWorker;
 
 /**
  * @author peng-yongsheng

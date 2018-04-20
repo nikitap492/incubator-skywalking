@@ -18,7 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.es.base.dao;
 
-import java.util.List;
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.core.annotations.trace.BatchParameter;
 import org.apache.skywalking.apm.collector.core.annotations.trace.GraphComputingMetric;
@@ -31,6 +30,8 @@ import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @author peng-yongsheng

@@ -18,13 +18,14 @@
 
 package org.apache.skywalking.apm.collector.storage.es.dao.cpu;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.skywalking.apm.collector.client.elasticsearch.ElasticSearchClient;
 import org.apache.skywalking.apm.collector.core.annotations.trace.GraphComputingMetric;
 import org.apache.skywalking.apm.collector.storage.es.base.dao.AbstractPersistenceEsDAO;
 import org.apache.skywalking.apm.collector.storage.table.jvm.CpuMetric;
 import org.apache.skywalking.apm.collector.storage.table.jvm.CpuMetricTable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author peng-yongsheng

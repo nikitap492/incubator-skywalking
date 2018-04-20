@@ -18,10 +18,11 @@
 
 package org.apache.skywalking.apm.collector.analysis.worker.model.impl.data;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import org.apache.skywalking.apm.collector.core.cache.Collection;
 import org.apache.skywalking.apm.collector.core.data.StreamData;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author peng-yongsheng

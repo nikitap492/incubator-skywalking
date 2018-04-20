@@ -18,14 +18,15 @@
 
 package org.apache.skywalking.apm.collector.configuration.service;
 
-import java.io.FileNotFoundException;
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.skywalking.apm.collector.core.util.ResourceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
+
+import java.io.FileNotFoundException;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Load settings from component-libraries.yml

@@ -18,9 +18,10 @@
 
 package org.apache.skywalking.apm.collector.storage.es;
 
-import java.util.Map;
 import org.apache.skywalking.apm.collector.storage.table.Metric;
 import org.apache.skywalking.apm.collector.storage.table.MetricColumns;
+
+import java.util.Map;
 
 /**
  * @author peng-yongsheng

@@ -18,11 +18,12 @@
 
 package org.apache.skywalking.apm.collector.storage.h2;
 
+import org.apache.skywalking.apm.collector.storage.table.Metric;
+import org.apache.skywalking.apm.collector.storage.table.MetricColumns;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-import org.apache.skywalking.apm.collector.storage.table.Metric;
-import org.apache.skywalking.apm.collector.storage.table.MetricColumns;
 
 /**
  * @author peng-yongsheng

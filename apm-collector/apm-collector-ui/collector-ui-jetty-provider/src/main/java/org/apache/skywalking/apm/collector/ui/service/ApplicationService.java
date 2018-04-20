@@ -18,8 +18,6 @@
 
 package org.apache.skywalking.apm.collector.ui.service;
 
-import java.text.ParseException;
-import java.util.List;
 import org.apache.skywalking.apm.collector.cache.CacheModule;
 import org.apache.skywalking.apm.collector.cache.service.ApplicationCacheService;
 import org.apache.skywalking.apm.collector.cache.service.ServiceNameCacheService;
@@ -43,6 +41,9 @@ import org.apache.skywalking.apm.collector.storage.ui.service.ServiceMetric;
 import org.apache.skywalking.apm.collector.ui.utils.DurationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.text.ParseException;
+import java.util.List;
 
 /**
  * @author peng-yongsheng

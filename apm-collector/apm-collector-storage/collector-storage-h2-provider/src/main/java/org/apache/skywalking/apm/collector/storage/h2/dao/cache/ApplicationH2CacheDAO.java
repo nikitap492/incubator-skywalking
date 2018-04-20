@@ -18,8 +18,6 @@
 
 package org.apache.skywalking.apm.collector.storage.h2.dao.cache;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import org.apache.skywalking.apm.collector.client.h2.H2Client;
 import org.apache.skywalking.apm.collector.client.h2.H2ClientException;
 import org.apache.skywalking.apm.collector.storage.base.sql.SqlBuilder;
@@ -29,6 +27,9 @@ import org.apache.skywalking.apm.collector.storage.table.register.Application;
 import org.apache.skywalking.apm.collector.storage.table.register.ApplicationTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author peng-yongsheng, clevertension
