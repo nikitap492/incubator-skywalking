@@ -27,7 +27,7 @@ import org.apache.skywalking.apm.collector.storage.table.jvm.MemoryPoolMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -39,7 +39,7 @@ public class MemoryPoolMetricService implements IMemoryPoolMetricService {
     private Graph<MemoryPoolMetric> memoryPoolMetricGraph;
 
     private Graph<MemoryPoolMetric> getMemoryPoolMetricGraph() {
-        if (Objects.isNull(memoryPoolMetricGraph)) {
+        if (isNull(memoryPoolMetricGraph)) {
             this.memoryPoolMetricGraph = GraphManager.INSTANCE.findGraph(GraphIdDefine.MEMORY_POOL_METRIC_PERSISTENCE_GRAPH_ID, MemoryPoolMetric.class);
         }
         return memoryPoolMetricGraph;

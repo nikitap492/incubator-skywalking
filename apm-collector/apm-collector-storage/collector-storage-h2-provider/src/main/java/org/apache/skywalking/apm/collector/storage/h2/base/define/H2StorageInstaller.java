@@ -38,6 +38,10 @@ public class H2StorageInstaller extends StorageInstaller {
 
     private final Logger logger = LoggerFactory.getLogger(H2StorageInstaller.class);
 
+    public H2StorageInstaller(boolean isHighPerformanceMode) {
+        super(isHighPerformanceMode);
+    }
+
     @Override protected void defineFilter(List<TableDefine> tableDefines) {
         int size = tableDefines.size();
         for (int i = size - 1; i >= 0; i--) {
@@ -70,17 +74,20 @@ public class H2StorageInstaller extends StorageInstaller {
         return false;
     }
 
-    @Override protected boolean deleteTable(Client client, TableDefine tableDefine) throws StorageException {
+    @Override protected void columnCheck(Client client, TableDefine tableDefine) throws StorageException {
+
+    }
+
+    @Override protected void deleteTable(Client client, TableDefine tableDefine) throws StorageException {
         H2Client h2Client = (H2Client)client;
         try {
             h2Client.execute("drop table if exists " + tableDefine.getName());
-            return true;
         } catch (H2ClientException e) {
             throw new StorageInstallException(e.getMessage(), e);
         }
     }
 
-    @Override protected boolean createTable(Client client, TableDefine tableDefine) throws StorageException {
+    @Override protected void createTable(Client client, TableDefine tableDefine) throws StorageException {
         H2Client h2Client = (H2Client)client;
         H2TableDefine h2TableDefine = (H2TableDefine)tableDefine;
 
@@ -90,9 +97,9 @@ public class H2StorageInstaller extends StorageInstaller {
         h2TableDefine.getColumnDefines().forEach(columnDefine -> {
             H2ColumnDefine h2ColumnDefine = (H2ColumnDefine)columnDefine;
             if (h2ColumnDefine.getType().equals(H2ColumnDefine.Type.Varchar.name())) {
-                sqlBuilder.append(h2ColumnDefine.getName()).append(" ").append(h2ColumnDefine.getType()).append("(255),");
+                sqlBuilder.append(h2ColumnDefine.getColumnName()).append(" ").append(h2ColumnDefine.getType()).append("(255),");
             } else {
-                sqlBuilder.append(h2ColumnDefine.getName()).append(" ").append(h2ColumnDefine.getType()).append(",");
+                sqlBuilder.append(h2ColumnDefine.getColumnName()).append(" ").append(h2ColumnDefine.getType()).append(",");
             }
         });
         //remove last comma
@@ -104,6 +111,5 @@ public class H2StorageInstaller extends StorageInstaller {
         } catch (H2ClientException e) {
             throw new StorageInstallException(e.getMessage(), e);
         }
-        return true;
     }
 }

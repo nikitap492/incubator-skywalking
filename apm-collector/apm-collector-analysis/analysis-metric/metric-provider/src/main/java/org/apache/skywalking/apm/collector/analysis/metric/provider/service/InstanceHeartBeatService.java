@@ -27,7 +27,7 @@ import org.apache.skywalking.apm.collector.storage.table.register.Instance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -39,7 +39,7 @@ public class InstanceHeartBeatService implements IInstanceHeartBeatService {
     private Graph<Instance> heartBeatGraph;
 
     private Graph<Instance> getHeartBeatGraph() {
-        if (Objects.isNull(heartBeatGraph)) {
+        if (isNull(heartBeatGraph)) {
             this.heartBeatGraph = GraphManager.INSTANCE.findGraph(MetricGraphIdDefine.INSTANCE_HEART_BEAT_PERSISTENCE_GRAPH_ID, Instance.class);
         }
         return heartBeatGraph;

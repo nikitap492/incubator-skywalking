@@ -28,12 +28,7 @@ import org.apache.skywalking.apm.collector.storage.dao.cache.IInstanceCacheDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-import java.util.function.Supplier;
-
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
 
 /**
  * @author peng-yongsheng
@@ -56,47 +51,64 @@ public class InstanceCacheGuavaService implements InstanceCacheService {
     }
 
     private IInstanceCacheDAO getInstanceCacheDAO() {
-        if (Objects.isNull(instanceCacheDAO)) {
+        if (isNull(instanceCacheDAO)) {
             this.instanceCacheDAO = moduleManager.find(StorageModule.NAME).getService(IInstanceCacheDAO.class);
         }
         return this.instanceCacheDAO;
     }
 
     @Override public int getApplicationId(int instanceId) {
-        return ofNullable(retrieveFromCache(applicationIdCache, instanceId,
-            () -> getInstanceCacheDAO().getApplicationId(instanceId))).orElse(0);
+        int applicationId = 0;
+        try {
+            applicationId = applicationIdCache.get(instanceId, () -> getInstanceCacheDAO().getApplicationId(instanceId));
+        } catch (Throwable e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        if (applicationId == 0) {
+            applicationId = getInstanceCacheDAO().getApplicationId(instanceId);
+            if (applicationId != 0) {
+                applicationIdCache.put(instanceId, applicationId);
+            }
+        }
+        return applicationId;
     }
 
     @Override public int getInstanceIdByAgentUUID(int applicationId, String agentUUID) {
         String key = applicationId + Const.ID_SPLIT + agentUUID;
 
-        return ofNullable(retrieveFromCache(agentUUIDCache, key,
-            () -> getInstanceCacheDAO().getInstanceIdByAgentUUID(applicationId, agentUUID))).orElse(0);
+        int instanceId = 0;
+        try {
+            instanceId = agentUUIDCache.get(key, () -> getInstanceCacheDAO().getInstanceIdByAgentUUID(applicationId, agentUUID));
+        } catch (Throwable e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        if (instanceId == 0) {
+            instanceId = getInstanceCacheDAO().getInstanceIdByAgentUUID(applicationId, agentUUID);
+            if (applicationId != 0) {
+                agentUUIDCache.put(key, instanceId);
+            }
+        }
+        return instanceId;
     }
 
     @Override public int getInstanceIdByAddressId(int applicationId, int addressId) {
         String key = applicationId + Const.ID_SPLIT + addressId;
 
-        return ofNullable(retrieveFromCache(addressIdCache, key,
-            () -> getInstanceCacheDAO().getInstanceIdByAddressId(applicationId, addressId))).orElse(0);
-    }
-
-
-    private <K, V> V retrieveFromCache(Cache<K, V> cache, K key, Supplier<V> supplier) {
-        V value = null;
+        int instanceId = 0;
         try {
-            value = cache.get(key, supplier::get);
+            instanceId = addressIdCache.get(key, () -> getInstanceCacheDAO().getInstanceIdByAddressId(applicationId, addressId));
         } catch (Throwable e) {
             logger.error(e.getMessage(), e);
         }
 
-        if (isNull(value)) {
-            value = supplier.get();
-            if (nonNull(value)) {
-                cache.put(key, value);
+        if (instanceId == 0) {
+            instanceId = getInstanceCacheDAO().getInstanceIdByAddressId(applicationId, addressId);
+            if (applicationId != 0) {
+                addressIdCache.put(key, instanceId);
             }
         }
-
-        return value;
+        return instanceId;
     }
 }

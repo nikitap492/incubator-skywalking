@@ -27,7 +27,7 @@ import org.apache.skywalking.apm.collector.storage.table.jvm.GCMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -39,7 +39,7 @@ public class GCMetricService implements IGCMetricService {
     private Graph<GCMetric> gcMetricGraph;
 
     private Graph<GCMetric> getGcMetricGraph() {
-        if (Objects.isNull(gcMetricGraph)) {
+        if (isNull(gcMetricGraph)) {
             gcMetricGraph = GraphManager.INSTANCE.findGraph(GraphIdDefine.GC_METRIC_PERSISTENCE_GRAPH_ID, GCMetric.class);
         }
         return gcMetricGraph;

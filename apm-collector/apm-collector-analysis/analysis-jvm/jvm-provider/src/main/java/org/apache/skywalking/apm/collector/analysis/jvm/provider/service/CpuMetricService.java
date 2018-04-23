@@ -27,7 +27,7 @@ import org.apache.skywalking.apm.collector.storage.table.jvm.CpuMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -39,7 +39,7 @@ public class CpuMetricService implements ICpuMetricService {
     private Graph<CpuMetric> cpuMetricGraph;
 
     private Graph<CpuMetric> getCpuMetricGraph() {
-        if (Objects.isNull(cpuMetricGraph)) {
+        if (isNull(cpuMetricGraph)) {
             cpuMetricGraph = GraphManager.INSTANCE.findGraph(GraphIdDefine.CPU_METRIC_PERSISTENCE_GRAPH_ID, CpuMetric.class);
         }
         return cpuMetricGraph;

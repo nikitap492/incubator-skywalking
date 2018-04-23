@@ -32,7 +32,8 @@ import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+
+import static java.util.Objects.nonNull;
 
 /**
  * @author peng-yongsheng
@@ -50,18 +51,20 @@ public abstract class PersistenceWorker<INPUT_AND_OUTPUT extends StreamData> ext
         this.batchDAO = moduleManager.find(StorageModule.NAME).getService(IBatchDAO.class);
     }
 
-    public void flushAndSwitch() {
+    public boolean flushAndSwitch() {
+        boolean isSwitch;
         try {
-            if (dataCache.trySwitchPointer()) {
+            if (isSwitch = dataCache.trySwitchPointer()) {
                 dataCache.switchPointer();
             }
         } finally {
             dataCache.trySwitchPointerFinally();
         }
+        return isSwitch;
     }
 
     @Override protected void onWork(INPUT_AND_OUTPUT input) {
-        if (dataCache.currentCollectionSize() >= 5000) {
+        if (dataCache.currentCollectionSize() >= 520000) {
             try {
                 if (dataCache.trySwitchPointer()) {
                     dataCache.switchPointer();
@@ -103,7 +106,7 @@ public abstract class PersistenceWorker<INPUT_AND_OUTPUT extends StreamData> ext
         dataMap.forEach((id, data) -> {
             if (needMergeDBData()) {
                 INPUT_AND_OUTPUT dbData = persistenceDAO().get(id);
-                if (Objects.nonNull(dbData)) {
+                if (nonNull(dbData)) {
                     dbData.mergeAndFormulaCalculateData(data);
                     try {
                         updateBatchCollection.add(persistenceDAO().prepareBatchUpdate(dbData));

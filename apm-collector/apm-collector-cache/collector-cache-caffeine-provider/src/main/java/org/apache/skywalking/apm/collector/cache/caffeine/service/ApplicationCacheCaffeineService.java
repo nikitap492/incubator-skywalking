@@ -28,8 +28,10 @@ import org.apache.skywalking.apm.collector.storage.table.register.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 /**
  * @author peng-yongsheng
@@ -48,7 +50,7 @@ public class ApplicationCacheCaffeineService implements ApplicationCacheService 
     }
 
     private IApplicationCacheDAO getApplicationCacheDAO() {
-        if (Objects.nonNull(applicationCacheDAO)) {
+        if (isNull(applicationCacheDAO)) {
             this.applicationCacheDAO = moduleManager.find(StorageModule.NAME).getService(IApplicationCacheDAO.class);
         }
         return this.applicationCacheDAO;
@@ -82,9 +84,9 @@ public class ApplicationCacheCaffeineService implements ApplicationCacheService 
             logger.error(e.getMessage(), e);
         }
 
-        if (Objects.isNull(application)) {
+        if (isNull(application)) {
             application = getApplicationCacheDAO().getApplication(applicationId);
-            if (Objects.nonNull(application)) {
+            if (nonNull(application)) {
                 applicationCache.put(applicationId, application);
             }
         }

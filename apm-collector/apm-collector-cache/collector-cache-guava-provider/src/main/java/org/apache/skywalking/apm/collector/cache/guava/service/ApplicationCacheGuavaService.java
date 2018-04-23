@@ -28,11 +28,8 @@ import org.apache.skywalking.apm.collector.storage.table.register.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.function.Supplier;
-
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
 
 /**
  * @author peng-yongsheng
@@ -42,8 +39,6 @@ public class ApplicationCacheGuavaService implements ApplicationCacheService {
     private final Logger logger = LoggerFactory.getLogger(ApplicationCacheGuavaService.class);
 
     private final Cache<String, Integer> codeCache = CacheBuilder.newBuilder().initialCapacity(100).maximumSize(1000).build();
-    private final Cache<Integer, Application> applicationCache = CacheBuilder.newBuilder().maximumSize(1000).build();
-    private final Cache<Integer, Integer> addressIdCache = CacheBuilder.newBuilder().maximumSize(1000).build();
 
     private final ModuleManager moduleManager;
     private IApplicationCacheDAO applicationCacheDAO;
@@ -60,36 +55,57 @@ public class ApplicationCacheGuavaService implements ApplicationCacheService {
     }
 
     @Override public int getApplicationIdByCode(String applicationCode) {
-        return ofNullable(retrieveFromCache(codeCache, applicationCode,
-            () -> getApplicationCacheDAO().getApplicationIdByCode(applicationCode))).orElse(0);
-    }
-
-
-    @Override public Application getApplicationById(int applicationId) {
-        return retrieveFromCache(applicationCache, applicationId, () -> getApplicationCacheDAO().getApplication(applicationId));
-    }
-
-
-    @Override public int getApplicationIdByAddressId(int addressId) {
-        return ofNullable(retrieveFromCache(addressIdCache, addressId,
-            () -> getApplicationCacheDAO().getApplicationIdByAddressId(addressId))).orElse(0);
-    }
-
-
-    private <K, V> V retrieveFromCache(Cache<K, V> cache, K key, Supplier<V> supplier) {
-        V value = null;
+        int applicationId = 0;
         try {
-            value = cache.get(key, supplier::get);
+            applicationId = codeCache.get(applicationCode, () -> getApplicationCacheDAO().getApplicationIdByCode(applicationCode));
         } catch (Throwable e) {
             logger.error(e.getMessage(), e);
         }
 
-        if (isNull(value)) {
-            value = supplier.get();
-            if (nonNull(value)) {
-                cache.put(key, value);
+        if (applicationId == 0) {
+            applicationId = getApplicationCacheDAO().getApplicationIdByCode(applicationCode);
+            if (applicationId != 0) {
+                codeCache.put(applicationCode, applicationId);
             }
         }
-        return value;
+        return applicationId;
+    }
+
+    private final Cache<Integer, Application> applicationCache = CacheBuilder.newBuilder().maximumSize(1000).build();
+
+    @Override public Application getApplicationById(int applicationId) {
+        Application application = null;
+        try {
+            application = applicationCache.get(applicationId, () -> getApplicationCacheDAO().getApplication(applicationId));
+        } catch (Throwable e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        if (isNull(application)) {
+            application = getApplicationCacheDAO().getApplication(applicationId);
+            if (nonNull(application)) {
+                applicationCache.put(applicationId, application);
+            }
+        }
+        return application;
+    }
+
+    private final Cache<Integer, Integer> addressIdCache = CacheBuilder.newBuilder().maximumSize(1000).build();
+
+    @Override public int getApplicationIdByAddressId(int addressId) {
+        int applicationId = 0;
+        try {
+            applicationId = addressIdCache.get(addressId, () -> getApplicationCacheDAO().getApplicationIdByAddressId(addressId));
+        } catch (Throwable e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        if (applicationId == 0) {
+            applicationId = getApplicationCacheDAO().getApplicationIdByAddressId(addressId);
+            if (applicationId != 0) {
+                addressIdCache.put(addressId, applicationId);
+            }
+        }
+        return applicationId;
     }
 }

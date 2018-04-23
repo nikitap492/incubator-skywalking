@@ -30,7 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
-import java.util.Objects;
+
+import static java.util.Objects.nonNull;
 
 /**
  * @author peng-yongsheng
@@ -163,7 +164,7 @@ public abstract class JettyHandler extends HttpServlet implements ServerHandler 
         response.setStatus(HttpServletResponse.SC_OK);
 
         PrintWriter out = response.getWriter();
-        if (Objects.nonNull(resJson)) {
+        if (nonNull(resJson)) {
             out.print(resJson);
         }
         out.flush();

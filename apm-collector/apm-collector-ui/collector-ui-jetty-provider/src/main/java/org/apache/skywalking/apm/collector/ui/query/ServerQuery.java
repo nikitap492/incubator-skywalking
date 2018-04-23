@@ -32,7 +32,8 @@ import org.apache.skywalking.apm.collector.ui.utils.DurationUtils;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Objects;
+
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -47,7 +48,7 @@ public class ServerQuery implements Query {
     }
 
     private ServerService getServerService() {
-        if (Objects.isNull(serverService)) {
+        if (isNull(serverService)) {
             this.serverService = new ServerService(moduleManager);
         }
         return serverService;

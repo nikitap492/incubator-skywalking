@@ -22,18 +22,16 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.apache.skywalking.apm.collector.cache.service.NetworkAddressCacheService;
 import org.apache.skywalking.apm.collector.core.module.ModuleManager;
+import org.apache.skywalking.apm.collector.core.util.StringUtils;
 import org.apache.skywalking.apm.collector.storage.StorageModule;
 import org.apache.skywalking.apm.collector.storage.dao.cache.INetworkAddressCacheDAO;
 import org.apache.skywalking.apm.collector.storage.table.register.NetworkAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 /**
  * @author peng-yongsheng
@@ -43,7 +41,6 @@ public class NetworkAddressCacheCaffeineService implements NetworkAddressCacheSe
     private final Logger logger = LoggerFactory.getLogger(NetworkAddressCacheCaffeineService.class);
 
     private final Cache<String, Integer> addressCache = Caffeine.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).initialCapacity(1000).maximumSize(5000).build();
-    private final Cache<Integer, NetworkAddress> idCache = Caffeine.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).initialCapacity(1000).maximumSize(5000).build();
 
     private final ModuleManager moduleManager;
     private INetworkAddressCacheDAO networkAddressCacheDAO;
@@ -60,30 +57,40 @@ public class NetworkAddressCacheCaffeineService implements NetworkAddressCacheSe
     }
 
     public int getAddressId(String networkAddress) {
-        return Optional.ofNullable(retrieveFromCache(addressCache, networkAddress,
-            () -> getNetworkAddressCacheDAO().getAddressId(networkAddress))).orElse(0);
-    }
-
-    public NetworkAddress getAddress(int addressId) {
-        return retrieveFromCache(idCache, addressId, () -> getNetworkAddressCacheDAO().getAddressById(addressId));
-    }
-
-
-    private <K, V> V retrieveFromCache(Cache<K, V> cache, K key, Supplier<V> supplier) {
-        V value = null;
+        int addressId = 0;
         try {
-            value = cache.get(key, (k) -> supplier.get());
+            Integer value = addressCache.get(networkAddress, key -> getNetworkAddressCacheDAO().getAddressId(key));
+            addressId = value == null ? 0 : value;
+
+            if (addressId == 0) {
+                addressId = getNetworkAddressCacheDAO().getAddressId(networkAddress);
+                if (addressId != 0) {
+                    addressCache.put(networkAddress, addressId);
+                }
+            }
         } catch (Throwable e) {
             logger.error(e.getMessage(), e);
         }
 
-        if (isNull(value)) {
-            value = supplier.get();
-            if (nonNull(value)) {
-                cache.put(key, value);
-            }
+        return addressId;
+    }
+
+    private final Cache<Integer, NetworkAddress> idCache = Caffeine.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).initialCapacity(1000).maximumSize(5000).build();
+
+    public NetworkAddress getAddress(int addressId) {
+        NetworkAddress networkAddress = null;
+        try {
+            networkAddress = idCache.get(addressId, key -> getNetworkAddressCacheDAO().getAddressById(key));
+        } catch (Throwable e) {
+            logger.error(e.getMessage(), e);
         }
 
-        return value;
+        if (isNull(networkAddress)) {
+            networkAddress = getNetworkAddressCacheDAO().getAddressById(addressId);
+            if (StringUtils.isNotEmpty(networkAddress)) {
+                idCache.put(addressId, networkAddress);
+            }
+        }
+        return networkAddress;
     }
 }

@@ -28,7 +28,7 @@ import org.apache.skywalking.apm.collector.storage.dao.cache.IServiceNameCacheDA
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -47,7 +47,7 @@ public class ServiceIdCacheGuavaService implements ServiceIdCacheService {
     }
 
     private IServiceNameCacheDAO getServiceNameCacheDAO() {
-        if (Objects.isNull(serviceNameCacheDAO)) {
+        if (isNull(serviceNameCacheDAO)) {
             this.serviceNameCacheDAO = moduleManager.find(StorageModule.NAME).getService(IServiceNameCacheDAO.class);
         }
         return this.serviceNameCacheDAO;

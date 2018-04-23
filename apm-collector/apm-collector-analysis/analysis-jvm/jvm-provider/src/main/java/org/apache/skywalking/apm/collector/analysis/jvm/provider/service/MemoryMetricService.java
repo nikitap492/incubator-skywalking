@@ -28,7 +28,7 @@ import org.apache.skywalking.apm.collector.storage.table.jvm.MemoryMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -40,7 +40,7 @@ public class MemoryMetricService implements IMemoryMetricService {
     private Graph<MemoryMetric> memoryMetricGraph;
 
     private Graph<MemoryMetric> getMemoryMetricGraph() {
-        if (Objects.isNull(memoryMetricGraph)) {
+        if (isNull(memoryMetricGraph)) {
             this.memoryMetricGraph = GraphManager.INSTANCE.findGraph(GraphIdDefine.MEMORY_METRIC_PERSISTENCE_GRAPH_ID, MemoryMetric.class);
         }
         return memoryMetricGraph;

@@ -29,7 +29,8 @@ import org.apache.skywalking.apm.collector.ui.utils.DurationUtils;
 import org.apache.skywalking.apm.collector.ui.utils.PaginationUtils;
 
 import java.text.ParseException;
-import java.util.Objects;
+
+import static java.util.Objects.isNull;
 
 /**
  * @author peng-yongsheng
@@ -44,7 +45,7 @@ public class AlarmQuery implements Query {
     }
 
     private AlarmService getAlarmService() {
-        if (Objects.isNull(alarmService)) {
+        if (isNull(alarmService)) {
             this.alarmService = new AlarmService(moduleManager);
         }
         return alarmService;

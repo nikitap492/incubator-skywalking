@@ -18,11 +18,7 @@
 
 package org.apache.skywalking.apm.collector.core.data;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.function.IntFunction;
-
-import static java.util.Optional.ofNullable;
+import static java.util.Objects.nonNull;
 
 /**
  * @author peng-yongsheng
@@ -98,15 +94,33 @@ public abstract class AbstractData {
     }
 
     public final Long getDataLong(int position) {
-        return ofNullable(dataLongs[position]).orElse(0L);
+        if (position + 1 > dataLongs.length) {
+            throw new IndexOutOfBoundsException();
+        } else if (dataLongs[position] == null) {
+            return 0L;
+        } else {
+            return dataLongs[position];
+        }
     }
 
     public final Double getDataDouble(int position) {
-        return ofNullable(dataDoubles[position]).orElse(0D);
+        if (position + 1 > dataDoubles.length) {
+            throw new IndexOutOfBoundsException();
+        } else if (dataDoubles[position] == null) {
+            return 0D;
+        } else {
+            return dataDoubles[position];
+        }
     }
 
     public final Integer getDataInteger(int position) {
-        return ofNullable(dataIntegers[position]).orElse(0);
+        if (position + 1 > dataIntegers.length) {
+            throw new IndexOutOfBoundsException();
+        } else if (dataIntegers[position] == null) {
+            return 0;
+        } else {
+            return dataIntegers[position];
+        }
     }
 
     public final byte[] getDataBytes(int position) {
@@ -143,21 +157,31 @@ public abstract class AbstractData {
 
     @SuppressWarnings("unchecked")
     private void calculateFormula() {
-        this.dataStrings = calculate(stringColumns, String[]::new);
-        this.dataLongs = calculate(stringColumns, Long[]::new);
-        this.dataDoubles = calculate(stringColumns, Double[]::new);
-        this.dataIntegers = calculate(stringColumns, Integer[]::new);
+        for (int i = 0; i < stringColumns.length; i++) {
+            if (nonNull(stringColumns[i].getFormulaOperation())) {
+                String stringData = (String)stringColumns[i].getFormulaOperation().operate(this);
+                this.dataStrings[i] = stringData;
+            }
+        }
+        for (int i = 0; i < longColumns.length; i++) {
+            if (nonNull(longColumns[i].getFormulaOperation())) {
+                Long longData = (Long)longColumns[i].getFormulaOperation().operate(this);
+                this.dataLongs[i] = longData;
+            }
+        }
+        for (int i = 0; i < doubleColumns.length; i++) {
+            if (nonNull(doubleColumns[i].getFormulaOperation())) {
+                Double doubleData = (Double)doubleColumns[i].getFormulaOperation().operate(this);
+                this.dataDoubles[i] = doubleData;
+            }
+        }
+        for (int i = 0; i < integerColumns.length; i++) {
+            if (nonNull(integerColumns[i].getFormulaOperation())) {
+                Integer integerData = (Integer)integerColumns[i].getFormulaOperation().operate(this);
+                this.dataIntegers[i] = integerData;
+            }
+        }
     }
-
-    @SuppressWarnings("unchecked")
-    private <T> T[] calculate(Column[] columns, IntFunction<T[]> arrayInitializer) {
-        return Arrays.stream(columns)
-                .filter(Objects::nonNull)
-                .map(t -> (T) t.getFormulaOperation().operate(this))
-                .toArray(arrayInitializer);
-
-    }
-
 
     @Override public final String toString() {
         StringBuilder dataStr = new StringBuilder();

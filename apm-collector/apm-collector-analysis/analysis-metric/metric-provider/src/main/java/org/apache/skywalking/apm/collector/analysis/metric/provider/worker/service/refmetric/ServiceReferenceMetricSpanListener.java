@@ -39,7 +39,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
+
+import static java.util.Objects.nonNull;
 
 /**
  * @author peng-yongsheng
@@ -178,7 +179,7 @@ public class ServiceReferenceMetricSpanListener implements FirstSpanListener, En
         });
 
         exitReferenceMetric.forEach(serviceReferenceMetric -> {
-            if (Objects.nonNull(entrySpanDecorator)) {
+            if (nonNull(entrySpanDecorator)) {
                 serviceReferenceMetric.setFrontServiceId(entrySpanDecorator.getOperationNameId());
             } else {
                 serviceReferenceMetric.setFrontServiceId(Const.NONE_SERVICE_ID);
